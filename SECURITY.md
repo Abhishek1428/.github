@@ -1,31 +1,88 @@
-Thanks for helping make GitHub safe for everyone.
-
-## Security
-
-GitHub takes the security of our software products and services seriously, including all of the open source code repositories managed through our GitHub organizations, such as [GitHub](https://github.com/GitHub).
-
-Even though [open source repositories are outside of the scope of our bug bounty program](https://bounty.github.com/index.html#scope) and therefore not eligible for bounty rewards, we will ensure that your finding gets passed along to the appropriate maintainers for remediation. 
-
-## Reporting Security Issues
-
-If you believe you have found a security vulnerability in any GitHub-owned repository, please report it to us through coordinated disclosure.
-
-**Please do not report security vulnerabilities through public GitHub issues, discussions, or pull requests.**
-
-Instead, please send an email to opensource-security[@]github.com.
-
-Please include as much of the information listed below as you can to help us better understand and resolve the issue:
-
-  * The type of issue (e.g., buffer overflow, SQL injection, or cross-site scripting)
-  * Full paths of source file(s) related to the manifestation of the issue
-  * The location of the affected source code (tag/branch/commit or direct URL)
-  * Any special configuration required to reproduce the issue
-  * Step-by-step instructions to reproduce the issue
-  * Proof-of-concept or exploit code (if possible)
-  * Impact of the issue, including how an attacker might exploit the issue
-
-This information will help us triage your report more quickly.
-
-## Policy
-
-See [GitHub's Safe Harbor Policy](https://docs.github.com/en/site-policy/security-policies/github-bug-bounty-program-legal-safe-harbor)
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNSuTffCv70uyQsArJ4nIy2",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/poiuyytee/OIBSIP-python/blob/main/weather.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import requests\n",
+        "\n",
+        "def fetch_weather(api_key, location):\n",
+        "    url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric'\n",
+        "    response = requests.get(url)\n",
+        "    if response.status_code == 200:\n",
+        "        return response.json()\n",
+        "    else:\n",
+        "        return None\n",
+        "\n",
+        "def display_weather(weather_data):\n",
+        "    if weather_data:\n",
+        "        city = weather_data['name']\n",
+        "        country = weather_data['sys']['country']\n",
+        "        temperature = weather_data['main']['temp']\n",
+        "        humidity = weather_data['main']['humidity']\n",
+        "        weather_description = weather_data['weather'][0]['description']\n",
+        "        print(f\"Location: {city}, {country}\")\n",
+        "        print(f\"Temperature: {temperature}°C\")\n",
+        "        print(f\"Humidity: {humidity}%\")\n",
+        "        print(f\"Weather: {weather_description}\")\n",
+        "    else:\n",
+        "        print(\"Error: Unable to fetch weather data.\")\n",
+        "\n",
+        "def main():\n",
+        "    api_key = '00dc4255d19f0fa8b2b5e7ba47bf2766'  # Replace with your OpenWeatherMap API key\n",
+        "    location = input(\"Enter city name or ZIP code: \")\n",
+        "    weather_data = fetch_weather(api_key, location)\n",
+        "    display_weather(weather_data)\n",
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "    main()\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5F-Jxn3eR6U6",
+        "outputId": "6cfb70c7-d5ad-4c21-cb2c-15f7c9d4ff3c"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Enter city name or ZIP code: 500050\n",
+            "Location: Hyderabad, IN\n",
+            "Temperature: 32.08°C\n",
+            "Humidity: 23%\n",
+            "Weather: few clouds\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
